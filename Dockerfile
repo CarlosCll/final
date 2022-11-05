@@ -11,6 +11,9 @@ RUN pip3 install opencv-python-headless
 WORKDIR $APP_HOME
 COPY . ./
 
+FROM gcr.io/cloud-builders/gcloud
+RUN git config --system credential.helper gcloud.sh
+
 # # CMD [ "uvicorn", "app.main:app","--host","0.0.0.0","--port","8000" ]
 ENTRYPOINT uvicorn app.main:app --host 0.0.0.0 --port $PORT 
 # # CMD exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 app.main:app
